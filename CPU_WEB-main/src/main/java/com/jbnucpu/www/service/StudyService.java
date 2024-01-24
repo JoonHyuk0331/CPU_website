@@ -36,6 +36,13 @@ public class StudyService {
         return studyRepository.findById(no);
     }
 
+    public Set<StudyMemberEntity> findStudyMember(Long no){
+        Optional<StudyEntity> studyEntity=studyRepository.findById(no);
+        StudyEntity se=studyEntity.get();
+        Set<StudyMemberEntity> sm=se.getStudyMemberEntities();
+        return sm;
+    }
+
     public void deleteStudy(Long no){
         Optional<StudyEntity> ds= studyRepository.findById(no);
         StudyEntity s=ds.get();

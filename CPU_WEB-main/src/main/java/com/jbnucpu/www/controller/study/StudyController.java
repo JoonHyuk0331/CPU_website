@@ -1,5 +1,6 @@
 package com.jbnucpu.www.controller.study;
 
+import com.jbnucpu.www.service.StudyMemberService;
 import org.springframework.ui.Model;
 import com.jbnucpu.www.dto.StudyDTO;
 import com.jbnucpu.www.entity.StudyEntity;
@@ -39,6 +40,8 @@ public class StudyController {
     public String studyNo(@PathVariable("no")Long no, Model model){
 
         model.addAttribute("studydata", studyService.findStudy(no).get());
+        model.addAttribute("studyMemberdata", studyService.findStudyMember(no));
+
 
         return "studyno";
     }
