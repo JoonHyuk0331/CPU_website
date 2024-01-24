@@ -1,0 +1,24 @@
+<h1>개설 스터디 리스트</h1>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#studydata}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{title}}</td>
+                <td>
+                    <form action="/study/{{id}}" method="get" name="study">
+                        <input type="submit" class="btn btn-primary" id="btn-save" value="세부 조회">
+                    </form>
+                </td>
+            </tr>
+        {{/studydata}}
+        </tbody>
+    </table>
+</div>

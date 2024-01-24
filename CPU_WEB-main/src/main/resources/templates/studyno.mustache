@@ -1,0 +1,81 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+{{studydata.title}}
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>studentNumber</th>
+            <th>name</th>
+            <th>grade</th>
+            <th>college</th>
+            <th>department</th>
+            <th>phoneNumber</th>
+            <th>studySubject</th>
+            <th>studyGoal</th>
+            <th>studyMethod</th>
+            <th>studyReference</th>
+            <th>studyTime</th>
+            <th>studyPlace</th>
+            <th>managerExperience</th>
+            <th>createDate</th>
+            <th>updateDate</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{studydata.id}}</td>
+                <td>{{studydata.title}}</td>
+                <td>{{studydata.studentNumber}}</td>
+                <td>{{studydata.name}}</td>
+                <td>{{studydata.grade}}</td>
+                <td>{{studydata.college}}</td>
+                <td>{{studydata.department}}</td>
+                <td>{{studydata.phoneNumber}}</td>
+                <td>{{studydata.studySubject}}</td>
+                <td>{{studydata.studyGoal}}</td>
+                <td>{{studydata.studyMethod}}</td>
+                <td>{{studydata.studyReference}}</td>
+                <td>{{studydata.studyTime}}</td>
+                <td>{{studydata.studyPlace}}</td>
+                <td>{{studydata.managerExperience}}</td>
+                <td>{{studydata.createDate}}</td>
+                <td>{{studydata.updateDate}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h2>스터디 멤버</h2>
+    <ul>
+        {{#studydata.studyMemberEntities}}
+            <li>{{studyMemberEntity.userEntitiy.name}}</li>
+        {{/studydata.studyMemberEntities}}
+    </ul>
+</div>
+<div>
+    <input type="submit" class="btn btn-primary" id="btn-save" value="참여자 조회">
+    <form action="/study/edit/{{studydata.id}}" method="get">
+        <input type="submit" class="btn btn-primary" id="btn-edit" value="수정">
+    </form>
+    <form action="/study/delete/{{studydata.id}}" method="get">
+        <input type="submit" class="btn btn-primary" id="btn-delete" value="삭제">
+    </form>
+    <input type="submit" class="btn btn-primary" id="btn-join" value="참가">
+    <input type="submit" class="btn btn-primary" id="btn-quit" value="탈퇴">
+    <form action="/study/apply/{{studydata.id}}" method="post">
+        <input type="submit" value="신청">
+    </form>
+</div>
+</body>
+</html>
