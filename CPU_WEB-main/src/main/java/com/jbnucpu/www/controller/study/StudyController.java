@@ -1,10 +1,8 @@
 package com.jbnucpu.www.controller.study;
 
-import com.jbnucpu.www.service.StudyMemberService;
 import org.springframework.ui.Model;
 import com.jbnucpu.www.dto.StudyDTO;
 import com.jbnucpu.www.entity.StudyEntity;
-import com.jbnucpu.www.service.StudyOpenService;
 import com.jbnucpu.www.service.StudyService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,25 +11,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class StudyController {
 
-    private final StudyOpenService studyOpenService;
     private final StudyService studyService;
 
-    public StudyController(StudyOpenService studyOpenService,StudyService studyService){
-        this.studyService= studyService;
-        this.studyOpenService = studyOpenService;
+    public StudyController(StudyService studyService){
+        this.studyService = studyService;
     }
 
     
     // 스터디 메인 (스터디 목록 보여줌)
     @GetMapping("/study")
     public String studyList(Model model){
-        List<StudyEntity> studyList=this.studyService.getList();
-        model.addAttribute("studydata",studyList);
+        model.addAttribute("studydatas",studyService.getList());
         return "studylist";
     }
 
@@ -41,7 +35,6 @@ public class StudyController {
 
         model.addAttribute("studydata", studyService.findStudy(no).get());
         model.addAttribute("studyMemberdata", studyService.findStudyMember(no));
-
 
         return "studyno";
     }
@@ -56,7 +49,7 @@ public class StudyController {
     @PostMapping("/study/open")
     public String processStudyOpen(@Valid StudyDTO studyDTO){ //@Valid 어노테이션으로 null 값 들어오면 에러 발생 시키기
 
-        Boolean isSigned = studyOpenService.processOpenStudy(studyDTO);
+        Boolean isSigned = studyService.processOpenStudy(studyDTO);
 
         return "redirect:/study";
     }
@@ -86,6 +79,14 @@ public class StudyController {
     @PostMapping("/study/apply/{no}")
     public String studyApply(@PathVariable("no")Long no){
         studyService.applyStudy(no);
+
+        return "redirect:/study/{no}";
+    }
+
+    // 스터디 삭제
+    @PostMapping("/study/quit/{no}")
+    public String studyQuit(@PathVariable("no")Long no){
+        studyService.quitStudy(no);
 
         return "redirect:/study/{no}";
     }

@@ -58,8 +58,9 @@
 <div>
     <h2>스터디 멤버</h2>
     <ul>
+        <!--studyMemberdata=Set<EnrollEntity>-->
         {{#studyMemberdata}}
-            <li>{{userEntity}}</li>
+            <li>{{userEntity.name}}</li>
         {{/studyMemberdata}}
     </ul>
 </div>
@@ -71,8 +72,9 @@
     <form action="/study/delete/{{studydata.id}}" method="get">
         <input type="submit" class="btn btn-primary" id="btn-delete" value="삭제">
     </form>
-    <input type="submit" class="btn btn-primary" id="btn-join" value="참가">
-    <input type="submit" class="btn btn-primary" id="btn-quit" value="탈퇴">
+    <form action="/study/quit/{{studydata.id}}" method="post">
+        <input type="submit" class="btn btn-primary" id="btn-quit" value="탈퇴">
+    </form>
     <form action="/study/apply/{{studydata.id}}" method="post">
         <input type="submit" value="신청">
     </form>
