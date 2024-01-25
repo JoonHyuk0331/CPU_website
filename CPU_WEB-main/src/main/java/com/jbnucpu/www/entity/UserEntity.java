@@ -46,6 +46,6 @@ public class UserEntity {
     //@Column(unique = true)
     private String judgementkey; // 혹시 쓰일지 모르는 개인 key 값
 
-    @OneToOne
+    @OneToOne(mappedBy = "userEntity")
     private StudyMemberEntity studyMemberEntity;
 }

@@ -1,6 +1,7 @@
 package com.jbnucpu.www.dto;
 
 import com.jbnucpu.www.entity.StudyEntity;
+import com.jbnucpu.www.entity.StudyMemberEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -15,7 +15,9 @@ public class StudyMemberEntity {
     @ManyToOne
     private StudyEntity studyEntity;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="USER_ID")
     private UserEntity userEntity;
+
 
 }

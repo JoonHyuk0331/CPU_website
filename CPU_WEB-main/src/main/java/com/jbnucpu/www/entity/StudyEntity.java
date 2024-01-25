@@ -52,6 +52,6 @@ public class StudyEntity {
     @UpdateTimestamp
     private Timestamp updateDate;
 
-    @OneToMany(mappedBy = "studyEntity")
+    @OneToMany(mappedBy = "studyEntity",cascade = CascadeType.REMOVE)
     private Set<StudyMemberEntity> studyMemberEntities = new HashSet<StudyMemberEntity>();
 }

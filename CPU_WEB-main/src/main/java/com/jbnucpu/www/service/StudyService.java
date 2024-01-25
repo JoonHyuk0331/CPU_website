@@ -38,15 +38,13 @@ public class StudyService {
 
     public Set<StudyMemberEntity> findStudyMember(Long no){
         Optional<StudyEntity> studyEntity=studyRepository.findById(no);
-        StudyEntity se=studyEntity.get();
-        Set<StudyMemberEntity> sm=se.getStudyMemberEntities();
-        return sm;
+        Set<StudyMemberEntity> studyMemberEntities=studyEntity.get().getStudyMemberEntities();
+        return studyMemberEntities;
     }
 
     public void deleteStudy(Long no){
-        Optional<StudyEntity> ds= studyRepository.findById(no);
-        StudyEntity s=ds.get();
-        this.studyRepository.delete(s);
+        Optional<StudyEntity> studyEntity= studyRepository.findById(no);
+        this.studyRepository.delete(studyEntity.get());
     }
 
     public void saveStudy(StudyDTO studyDTO){
@@ -55,8 +53,8 @@ public class StudyService {
     }
 
     public void editStudy(StudyDTO studyDTO,Long no){
-        Optional<StudyEntity> es= studyRepository.findById(no);
-        StudyEntity s=es.get();
+        Optional<StudyEntity> studyEntity= studyRepository.findById(no);
+        StudyEntity s=studyEntity.get();
         s.setTitle(studyDTO.getTitle());
         s.setStudentNumber(studyDTO.getStudentNumber());
         s.setName(studyDTO.getName());
@@ -79,14 +77,16 @@ public class StudyService {
         //새로운 엔티티 생성
         StudyMemberEntity studyMemberEntity = new StudyMemberEntity();
 
-        //userEntity 맵핑
+        //StudyMemberEntity에 userEntity 맵핑
         UserEntity userEntity = userRepository.findByStudentnumber(authService.getUsername());
         studyMemberEntity.setUserEntity(userEntity);
-        //studyEntity 맵핑
+        //StudyMemberEntity에 studyEntity 맵핑
         Optional<StudyEntity> studyEntity= studyRepository.findById(no);
-        StudyEntity sd=studyEntity.get();
-        studyMemberEntity.setStudyEntity(sd);
+        studyMemberEntity.setStudyEntity(studyEntity.get());
         studyMemberRepository.save(studyMemberEntity);
+        //UserEnitity에 StudyMemberEntity 맵핑
+        userEntity.setStudyMemberEntity(studyMemberEntity);
+
         //저장
         return true;
     }
