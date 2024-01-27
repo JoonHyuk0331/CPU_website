@@ -33,7 +33,16 @@ public class StudyService {
     }
 
     public Boolean processOpenStudy(StudyDTO studyDTO){
+        if(!authService.isAuthenticated()){
+            System.out.println("신청 실패: 로그인 한 사용자만 신청가능");
+            return false;
+        }
+        //open시 학번을 제외한 데이터만 넘겨줌
+        //사용자 이름 검증해서 이거만 따로 dto에 넣기
+        studyDTO.toEntity_ExceptStudentNumber();
+        studyDTO.setStudentNumber(authService.getUsername());
         StudyEntity studyEntity = studyDTO.toEntity();
+        //유저 학번 강제로 박기
         studyRepository.save(studyEntity);
         return true;
     }
@@ -49,9 +58,21 @@ public class StudyService {
         return studyMemberEntities;
     }
 
-    public void deleteStudy(Long no){
-        Optional<StudyEntity> studyEntity= studyRepository.findById(no);
+    public Boolean deleteStudy(Long no){
+        if(!authService.isAuthenticated()){
+            System.out.println("삭제 실패: 로그인 한 사용자 본인만 삭제 가능");
+            return false;
+        }
+
+        Optional<StudyEntity> studyEntity=studyRepository.findById(no);
+        System.out.println(studyEntity.get().getStudentNumber());
+        System.out.println(authService.getUsername());
+        if(!authService.getUsername().equals(studyEntity.get().getStudentNumber())){
+            System.out.println("삭제 실패: 스터디 개설자 본인만 삭제 가능");
+            return false;
+        }
         this.studyRepository.delete(studyEntity.get());
+        return true;
     }
 
     public void saveStudy(StudyDTO studyDTO){
@@ -63,7 +84,7 @@ public class StudyService {
         Optional<StudyEntity> studyEntity= studyRepository.findById(no);
         StudyEntity s=studyEntity.get();
         s.setTitle(studyDTO.getTitle());
-        s.setStudentNumber(studyDTO.getStudentNumber());
+        /*s.setStudentNumber(studyDTO.getStudentNumber());*/
         s.setName(studyDTO.getName());
         s.setGrade(studyDTO.getGrade());
         s.setCollege(studyDTO.getCollege());
