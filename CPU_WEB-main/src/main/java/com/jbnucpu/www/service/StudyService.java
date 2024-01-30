@@ -53,6 +53,7 @@ public class StudyService {
 
     //no에 해당하는 StudyEntity의 enrollEntity들을 반환
     public Set<EnrollEntity> findStudyMember(Long no){
+        System.out.println("findStudyMember 실행---------------------------->");
         Optional<StudyEntity> studyEntity=studyRepository.findById(no);
         Set<EnrollEntity> studyMemberEntities=studyEntity.get().getEnrollEntities_Study();
         return studyMemberEntities;
